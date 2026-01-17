@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Taha's Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    crossorigin="anonymous" />
+
+  <style>
+    :root {
+      --bg: #050816;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --card-bg: #020617;
+      --border-soft: #1f2937;
+      --nav-height: 70px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1f2937 0, #020617 40%, #020617 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(2, 6, 23, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.13);
+      z-index: 50;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 18px;
+      z-index: 52;
+    }
+
+    .nav-logo-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: radial-gradient(circle at 20% 0, rgba(56, 189, 248, .7), rgba(15, 23, 42, 1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      border: 1px solid rgba(148, 163, 184, .7);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 4px 0;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, #38bdf8, #7dd3fc);
+      border-radius: 999px;
+      transition: width 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--text-main);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Burger Menu Button */
+    .burger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 52;
+    }
+
+    .burger-line {
+      width: 24px;
+      height: 2px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .burger-btn.active .burger-line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .burger-btn.active .burger-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger-btn.active .burger-line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      background: rgba(2, 6, 23, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.13);
+      padding: 20px;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 49;
+    }
+
+    .mobile-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .mobile-menu-links .nav-link {
+      font-size: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    /* Sections */
+    section {
+      padding: 80px 20px;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      max-width: 520px;
+      margin: 0 auto;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Hero */
+    #home {
+      padding-top: calc(var(--nav-height) + 40px);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .home-eyebrow {
+      font-size: 14px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .home-name {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .home-name span {
+      color: var(--accent);
+    }
+
+    .home-role {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px 4px 4px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(75, 85, 99, 0.7);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .role-pill {
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 500;
+      border: 1px solid rgba(56, 189, 248, 0.6);
+    }
+
+    .home-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 430px;
+      margin-bottom: 24px;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.95);
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s, background 0.15s;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      color: #bae6fd;
+      background: #020617;
+      box-shadow: 0 12px 30px rgba(56, 189, 248, 0.4);
+    }
+
+    .avatar-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .avatar-circle {
+      position: relative;
+      width: 320px;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 20% 0, rgba(56, 189, 248, 0.18), transparent 55%),
+        radial-gradient(circle at 80% 10%, rgba(56, 189, 248, 0.24), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(30, 64, 175, 0.3), transparent 60%),
+        #020617;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow:
+        0 22px 60px rgba(15, 23, 42, 0.9),
+        0 0 80px rgba(56, 189, 248, 0.32),
+        0 0 100px rgba(56, 189, 248, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .avatar-inner {
+      width: 78%;
+      aspect-ratio: 3 / 4;
+      border-radius: 32px;
+      background: #020617;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-inner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.65), transparent 35%);
+      pointer-events: none;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .about-image {
+      width: 320px;
+      max-width: 100%;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.95),
+        0 0 90px rgba(56, 189, 248, 0.4);
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-text-main {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .about-see-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--accent);
+      cursor: pointer;
+    }
+
+    /* Grid cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: linear-gradient(to bottom right, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+      border-radius: 18px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.85);
+      display: flex;
+      flex-direction: column;
+      transform: translateY(0);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.8);
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.95),
+        0 0 60px rgba(56, 189, 248, 0.35);
+    }
+
+    .card-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: radial-gradient(circle at 20% 0, #1f2937, #020617);
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 14px 16px 16px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .service-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, rgba(56, 189, 248, 0.45), rgba(15, 23, 42, 0.98));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    /* Contact */
+    .contact-grid {
+      max-width: 680px;
+      margin: 0 auto;
+      background: linear-gradient(to bottom right, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+      border-radius: 22px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.9);
+      padding: 24px 22px 26px;
+    }
+
+    .contact-title {
+      font-size: 22px;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .contact-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 16px;
+    }
+
+    .form-full {
+      grid-column: 1 / -1;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .field-input,
+    .field-textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 9px 11px;
+      font-size: 13px;
+      background: #020617;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+    }
+
+    .field-input:focus,
+    .field-textarea:focus {
+      border-color: rgba(56, 189, 248, 0.9);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.8);
+      background: #020617;
+    }
+
+    .field-textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .submit-row {
+      margin-top: 14px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .submit-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      background: linear-gradient(to right, #38bdf8, #7dd3fc);
+      color: #022c3d;
+      cursor: pointer;
+      box-shadow:
+        0 10px 25px rgba(56, 189, 248, 0.55),
+        0 0 40px rgba(56, 189, 248, 0.55);
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 18px 40px rgba(56, 189, 248, 0.7),
+        0 0 60px rgba(56, 189, 248, 0.6);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow:
+        0 10px 24px rgba(56, 189, 248, 0.6),
+        0 0 40px rgba(56, 189, 248, 0.55);
+    }
+
+    /* Footer */
+    footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+
+      .home-grid,
+      .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .avatar-wrap {
+        order: -1;
+        margin-bottom: 10px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .nav-menu {
+        display: none;
+      }
+
+      .burger-btn {
+        display: flex;
+      }
+
+      #home {
+        padding-top: calc(var(--nav-height) + 20px);
+      }
+
+      section {
+        padding-inline: 16px;
+      }
+
+      .home-name {
+        font-size: 32px;
+      }
+
+      .avatar-circle {
+        width: 260px;
+      }
+
+      .contact-grid {
+        padding: 20px 18px 22px;
+      }
+
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">
+        <div class="nav-logo-icon">
+          <i class="fa-solid fa-code"></i>
+        </div>
+        <span>portfolio.</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#portfolio" class="nav-link">Portfolio</a>
+        <a href="#service" class="nav-link">Service</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Burger Button -->
+      <button class="burger-btn" id="burgerBtn" aria-label="Toggle menu">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <nav class="mobile-menu-links">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#portfolio" class="nav-link">Portfolio</a>
+      <a href="#service" class="nav-link">Service</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </div>
+
+  <!-- Home -->
+  <section id="home">
+    <div class="section-inner home-grid">
+      <div>
+        <div class="home-eyebrow">Hello It's Me</div>
+        <h1 class="home-name"><span>Taha</span> Mohammed</h1>
+        <div class="home-role">
+          <span>And I'm a</span>
+          <span class="role-pill">Developer</span>
+        </div>
+        <p class="home-text">
+          Frontend & backend developer creating modern, responsive web experiences.
+        </p>
+
+        <div class="social-row">
+          <a class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a class="social-btn"><i class="fa-brands fa-github"></i></a>
+          <a class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
+          <a class="social-btn"><i class="fa-brands fa-dribbble"></i></a>
+        </div>
+      </div>
+
+      <div class="avatar-wrap">
+        <div class="avatar-circle">
+          <div class="avatar-inner">
+            <!-- SVG Hero Illustration (Webflow style) -->
+            <img
+              src="https://cdn.prod.website-files.com/67895bff36aab6e862fc7038/678a7986b0074f36266e159a_Vectors-Wrapper.svg"
+              alt="Developer illustration" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-inner about-grid">
+      <div class="about-image-wrap">
+        <div class="about-image">
+          <img
+            src="https://cdn.prod.website-files.com/67895bff36aab6e862fc7038/678a8179654468a841b400f1_Vectors-Wrapper.svg"
+            alt="About illustration" />
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow">About</div>
+        <h2 class="section-title">Me</h2>
+        <p class="about-text-main">
+          Passionate web developer focused on building clean, fast and accessible digital experiences.
+        </p>
+        <div class="about-see-more">See more →</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="eyebrow">Our</div>
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">
+          UI-focused projects and modern web applications.
+        </p>
+      </div>
+
+      <div class="grid">
+
+        <article class="card">
+          <div class="card-image">
+            <img
+              src="https://cdn.prod.website-files.com/67895bff36aab6e862fc7038/678998d702b4083589fb378c_Image-Wrapper.jpg"
+              alt="Project 1" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Project One</h3>
+            <p class="card-desc">UI Dashboard</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <img src="https://cdn.prod.website-files.com/67895bff36aab6e862fc7038/678998d8f645318b4ebc6be1_Image.png"
+              alt="Project 2" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Project Two</h3>
+            <p class="card-desc">Landing Page</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <img src="https://cdn.prod.website-files.com/67895bff36aab6e862fc7038/678998d911ebcab5fe243f65_Image.png"
+              alt="Project 3" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Project Three</h3>
+            <p class="card-desc">Portfolio</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <img src="https://cdn.prod.website-files.com/67895bff36aab6e862fc7038/678998db4b7d38b074c289d1_Image.png"
+              alt="Project 4" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Project Four</h3>
+            <p class="card-desc">Web App</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <img
+              src="https://cdn.prod.website-files.com/67895bff36aab6e862fc7038/678998db02b4083589fb3cf0_Image-Wrapper.jpg"
+              alt="Project 5" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Project Five</h3>
+            <p class="card-desc">UI Concept</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <img src="https://cdn.prod.website-files.com/67895bff36aab6e862fc7038/678998dcb9b2f4d8d31b48e6_Image.png"
+              alt="Project 6" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Project Six</h3>
+            <p class="card-desc">Design System</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="service">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="eyebrow">Our</div>
+        <h2 class="section-title">Services</h2>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="card-body">
+            <div class="service-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <h3 class="card-title">Web Development</h3>
+            <p class="card-desc">Modern responsive applications</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <h3 class="card-title">Digital Marketing</h3>
+            <p class="card-desc">Growth-focused UI & funnels</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <div class="service-icon"><i class="fa-solid fa-object-group"></i></div>
+            <h3 class="card-title">UX / UI Design</h3>
+            <p class="card-desc">Clean and intuitive interfaces</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <h2 class="contact-title">Contact <span style="color:#38bdf8;">Me</span></h2>
+        <form>
+          <div class="form-grid">
+            <div>
+              <label class="field-label">Name</label>
+              <input class="field-input" />
+            </div>
+            <div>
+              <label class="field-label">Email</label>
+              <input class="field-input" />
+            </div>
+            <div class="form-full">
+              <label class="field-label">Message</label>
+              <textarea class="field-textarea"></textarea>
+            </div>
+          </div>
+          <div class="submit-row">
+            <button class="submit-btn">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Taha's Portfolio
+  </footer>
+
+  <!-- JavaScript للـ Burger Menu -->
+  <script>
+    const burgerBtn = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-menu-links .nav-link');
+
+    burgerBtn.addEventListener('click', () => {
+      burgerBtn.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+
+    // إغلاق القائمة عند الضغط على أي رابط
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      });
+    });
+  </script>
+
+</body>
+
+</html>
